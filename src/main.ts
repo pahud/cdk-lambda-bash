@@ -24,7 +24,7 @@ export class BashExecFunction extends Construct {
 
     if (props?.dockerfile && fs.existsSync(props?.dockerfile)) {
       // Copy your Dockerfile to Dockerfile.custom.
-      fs.copyFileSync(props?.dockerfile, path.join(__dirname, '../docker.d/Dockerfile.custom') );
+      fs.copyFileSync(props?.dockerfile, path.join(__dirname, '../docker.d/Dockerfile.custom'));
     }
     const dockerDirPath = path.join(__dirname, '../docker.d');
     const scriptPath = props.script;
