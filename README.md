@@ -44,8 +44,6 @@ In some cases, you may customize your own `Dockerfile`, for instances:
 In these cases, create a custom `Dockerfile` as below and add extra utilities i.e. `kubectl`:
 
 ```bash
-touch Dockerfile
----
 FROM public.ecr.aws/lambda/provided:al2
 
 RUN yum install -y unzip jq
