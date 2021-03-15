@@ -35,7 +35,7 @@ export class BashExecFunction extends Construct {
 
     this.handler = new lambda.DockerImageFunction(this, 'BashExecFunction', {
       code: lambda.DockerImageCode.fromImageAsset(dockerDirPath, {
-        file: props?.dockerfile ? 'Dockerfile.custom': 'Dockerfile',
+        file: props?.dockerfile && fs.existsSync(props?.dockerfile) ? 'Dockerfile.custom': 'Dockerfile',
       }),
       timeout: Duration.seconds(60),
       logRetention: logs.RetentionDays.ONE_DAY,
