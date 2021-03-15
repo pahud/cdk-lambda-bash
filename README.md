@@ -35,7 +35,7 @@ fn.run();
 
 ```
 
-## Specify Custom Dockerfile
+## Custom Dockerfile
 In some cases, you may customize your own `Dockerfile`, for instances:
 
 1. You need extra tools or utilities such as `kubectl` or `helm`
