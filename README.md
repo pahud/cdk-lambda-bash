@@ -42,6 +42,7 @@ In some cases, you may customize your own `Dockerfile`, for instances:
 2. You need build from your own base image
 
 In these cases, create a custom `Dockerfile` as below and add extra utilities i.e. `kubectl`:
+<details><summary>click and view custom Dockerfile sample</summary>
 
 ```bash
 FROM public.ecr.aws/lambda/provided:al2
@@ -66,6 +67,9 @@ RUN chmod +x /var/runtime/bootstrap /var/task/function.sh /var/task/main.sh
 WORKDIR /var/task
 CMD [ "function.sh.handler" ]
 ```
+
+</details>
+
 Specify your own `Dockerfile` with the `dockerfile` property.
 ```ts
 const app = new cdk.App();
