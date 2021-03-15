@@ -44,7 +44,7 @@ export class BashExecFunction extends Construct {
   }
   public run() {
     const onEvent = new lambda.DockerImageFunction(this, 'OnEventHandler', {
-      code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../docker.d' ), {
+      code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../docker.d'), {
         cmd: ['function.sh.onEvent'],
       }),
       environment: {
