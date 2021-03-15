@@ -17,6 +17,7 @@ export class IntegTesting {
 
     new BashExecFunction(stack, 'Demo', {
       script: path.join(__dirname, '../demo.sh'),
+      dockerfile: path.join(__dirname, '../Dockerfile'),
     }).run();
 
     app.synth();

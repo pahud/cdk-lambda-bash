@@ -35,6 +35,51 @@ fn.run();
 
 ```
 
+## Specify Custom Dockerfile
+Sometime you need add other tools to Lambda runtime.
+like I need the `kubectl`.
+
+Custom My Dockerfile
+```bash
+touch Dockerfile
+---
+FROM public.ecr.aws/lambda/provided:al2
+
+RUN yum install -y unzip jq
+
+# install aws-cli v2
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+  unzip awscliv2.zip && \
+  ./aws/install
+
+# install kubectl
+RUN curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl && \
+  chmod +x kubectl && \
+  mv kubectl /usr/local/bin/kubectl
+
+COPY bootstrap /var/runtime/bootstrap
+COPY function.sh /var/task/function.sh
+COPY main.sh /var/task/main.sh
+RUN chmod +x /var/runtime/bootstrap /var/task/function.sh /var/task/main.sh
+
+WORKDIR /var/task
+CMD [ "function.sh.handler" ]
+---
+```
+we can use `dockerfile` props, to specify your own `Dockerfile`.
+```ts
+const app = new cdk.App();
+
+    const stack = new cdk.Stack(app, 'my-stack-dev', { env: devEnv });
+
+    new BashExecFunction(stack, 'Demo', {
+      script: path.join(__dirname, '../demo.sh'),
+      dockerfile: path.join(__dirname, '../Dockerfile'),
+    }).run();
+
+    app.synth();
+```
+
 # In Action
 
 See this [tweet](https://twitter.com/pahudnet/status/1370301964836241408)
