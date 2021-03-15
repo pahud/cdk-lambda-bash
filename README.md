@@ -36,10 +36,13 @@ fn.run();
 ```
 
 ## Specify Custom Dockerfile
-Sometime you need add other tools to Lambda runtime.
-like I need the `kubectl`.
+In some cases, you may customize your own `Dockerfile`, for instances:
 
-Custom My Dockerfile
+1. You need extra tools or utilities such as `kubectl` or `helm`
+2. You need build from your own base image
+
+In these cases, create a custom `Dockerfile` as below and add extra utilities i.e. `kubectl`:
+
 ```bash
 touch Dockerfile
 ---
