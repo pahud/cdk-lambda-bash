@@ -66,7 +66,7 @@ RUN chmod +x /var/runtime/bootstrap /var/task/function.sh /var/task/main.sh
 WORKDIR /var/task
 CMD [ "function.sh.handler" ]
 ```
-we can use `dockerfile` props, to specify your own `Dockerfile`.
+Specify your own `Dockerfile` with the `dockerfile` property.
 ```ts
 const app = new cdk.App();
 
