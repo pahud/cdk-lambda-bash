@@ -12,6 +12,7 @@ Name|Description
 Name|Description
 ----|-----------
 [BashExecFunctionProps](#cdk-lambda-bash-bashexecfunctionprops)|*No description*
+[RunOps](#cdk-lambda-bash-runops)|*No description*
 
 
 
@@ -50,14 +51,16 @@ Name | Type | Description
 ### Methods
 
 
-#### run() <a id="cdk-lambda-bash-bashexecfunction-run"></a>
+#### run(ops?) <a id="cdk-lambda-bash-bashexecfunction-run"></a>
 
 
 
 ```ts
-run(): void
+run(ops?: RunOps): void
 ```
 
+* **ops** (<code>[RunOps](#cdk-lambda-bash-runops)</code>)  *No description*
+  * **runOnUpdate** (<code>boolean</code>)  whether to run the lambda function again on the provider update. __*Default*__: false;
 
 
 
@@ -76,6 +79,19 @@ Name | Type | Description
 **script** | <code>string</code> | The path of the shell script to be executed.
 **dockerfile**? | <code>string</code> | The path of your custom dockerfile.<br/>__*Optional*__
 **environment**? | <code>Map<string, string></code> | Lambda environment variables.<br/>__*Optional*__
+
+
+
+## struct RunOps  <a id="cdk-lambda-bash-runops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**runOnUpdate**? | <code>boolean</code> | whether to run the lambda function again on the provider update.<br/>__*Default*__: false;
 
 
 
