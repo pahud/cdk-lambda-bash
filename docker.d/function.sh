@@ -2,7 +2,7 @@ function handler() {
   EVENT_DATA=$1
 
   export EVENT_DATA
-
+ 
   RESPONSE="$(./main.sh)"
   
   # send to cloudwatch logs
@@ -17,6 +17,7 @@ function onEvent() {
   EVENT_DATA=$1
   echo "onEvent ==> $EVENT_DATA" 1>&2;
   requestType=$(getRequestType $1)
+  
   case $requestType in
     'Create') onCreate $1 ;;
     'Update') onUpdate $1 ;;
