@@ -23,7 +23,7 @@ export class IntegTesting {
       },
     });
 
-    fn.run();
+    fn.run({ runOnUpdate: true });
 
     app.synth();
     this.stack = [stack];

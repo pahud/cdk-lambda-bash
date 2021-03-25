@@ -20,6 +20,6 @@ test('re-execution on assets update', () => {
     script: path.join(__dirname, '../demo.sh'),
   }).run({ runOnUpdate: true });
   expect(stack).toHaveResourceLike('AWS::CloudFormation::CustomResource', {
-    assetHash: 'ad25580395760d7a779725647e9844b96c1c4408dc877f21856a14a99a976784',
+    assetHash: 'd5e611fbe2e9fa66608504727183fb0f1ce52c354df17ffd38a7203cb62eee09',
   });
 });

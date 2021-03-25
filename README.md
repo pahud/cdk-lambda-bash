@@ -88,6 +88,77 @@ new BashExecFunction(stack, 'Demo', {
 });
 ```
 
+# Conditional Execution
+
+In the user script(e.g. `demo.sh`), you are allowed to determine the event type and act accordingly.
+
+For example
+
+```ts
+
+const installArgoCD = new BashExecFunction(...)
+
+installArgoCD.run({runOnUpdate: true});
+
+```
+
+When you run this sample, `demo.sh` will receive `onCreate` event and you can run your custom logic to "install ArgoCD" like `kubectl apply -f URL`. However, if you comment it off and deploy again:
+
+```ts
+const installArgoCD = new BashExecFunction(...)
+
+//installArgoCD.run({runOnUpdate: true});
+```
+
+Under the hood, `demo.sh` will receive `onDelete` event and you can run your custom logic to "uninstall ArgoCD"
+like `kubectl delete -f URL`.
+
+Check the full sample code below:
+
+<details><summary>Click and view the sample code</summary>
+
+```sh
+#!/bin/bash
+
+# implement your business logic below
+function onCreate() {
+  echo "running kubectl apply -f ..."
+}
+
+function onUpdate() { 
+  echo "do nothing on update"
+}
+
+function onDelete() { 
+  echo "running kubectl delete -f ..."
+}
+
+function getRequestType() {
+  echo $1 | jq -r .RequestType
+}
+
+function conditionalExec() {
+  requestType=$(getRequestType $EVENT_DATA)
+
+  # determine the original request type
+  case $requestType in
+    'Create') onCreate $1 ;;
+    'Update') onUpdate $1 ;;
+    'Delete') onDelete $1 ;;
+  esac
+}
+
+echo "Hello cdk lambda bash!!"
+
+conditionalExec
+
+exit 0
+```
+
+
+</details>
+
+
 # In Action
 
 See this [tweet](https://twitter.com/pahudnet/status/1370301964836241408)
