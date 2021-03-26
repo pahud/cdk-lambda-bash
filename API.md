@@ -56,14 +56,14 @@ Name | Type | Description
 
 
 ```ts
-run(ops?: RunOps): void
+run(ops?: RunOps): CustomResource
 ```
 
 * **ops** (<code>[RunOps](#cdk-lambda-bash-runops)</code>)  *No description*
   * **runOnUpdate** (<code>boolean</code>)  whether to run the lambda function again on the provider update. __*Default*__: false;
 
-
-
+__Returns__:
+* <code>[CustomResource](#aws-cdk-core-customresource)</code>
 
 
 
