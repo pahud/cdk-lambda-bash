@@ -24,6 +24,9 @@ const project = new AwsCdkConstructLibrary({
   bundledDeps: [
     'projen-automate-it',
   ],
+  cdkTestDependencies: [
+    '@aws-cdk/aws-s3',
+  ],
   publishToPypi: {
     distName: 'cdk-lambda-bash',
     module: 'cdk_lambda_bash',

@@ -380,7 +380,7 @@ Object {
         },
         "assetHash": "d14db8cb6745fe5db38519bf27be8c5d81753db709c73ac3a799756da48ac28f",
       },
-      "Type": "AWS::CloudFormation::CustomResource",
+      "Type": "Custom::RunLambdaBash",
       "UpdateReplacePolicy": "Delete",
     },
     "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {

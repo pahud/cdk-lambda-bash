@@ -1,6 +1,7 @@
 import '@aws-cdk/assert/jest';
 import * as path from 'path';
-import { SynthUtils } from '@aws-cdk/assert';
+import { ResourcePart, SynthUtils } from '@aws-cdk/assert';
+import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
 import { BashExecFunction } from '../src';
 import { IntegTesting } from '../src/integ.default';
@@ -19,7 +20,21 @@ test('re-execution on assets update', () => {
   new BashExecFunction(stack, 'Demo', {
     script: path.join(__dirname, '../demo.sh'),
   }).run({ runOnUpdate: true });
-  expect(stack).toHaveResourceLike('AWS::CloudFormation::CustomResource', {
+  expect(stack).toHaveResourceLike('Custom::RunLambdaBash', {
     assetHash: 'd14db8cb6745fe5db38519bf27be8c5d81753db709c73ac3a799756da48ac28f',
   });
+});
+
+test('run should return custom resource', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'test-stack');
+  const fn = new BashExecFunction(stack, 'Demo', {
+    script: path.join(__dirname, '../demo.sh'),
+  });
+  const cr = fn.run({ runOnUpdate: true });
+  const bucket = new s3.Bucket(stack, 'Bucket');
+  cr.node.addDependency(bucket);
+  expect(stack).toHaveResource('Custom::RunLambdaBash', {
+    DependsOn: ['Bucket83908E77'],
+  }, ResourcePart.CompleteDefinition);
 });

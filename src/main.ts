@@ -57,7 +57,7 @@ export class BashExecFunction extends Construct {
     });
     new CfnOutput(this, 'LogGroup', { value: this.handler.logGroup.logGroupName });
   }
-  public run(ops: RunOps = {}) {
+  public run(ops: RunOps = {}): CustomResource {
     const onEvent = new lambda.DockerImageFunction(this, 'OnEventHandler', {
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../docker.d'), {
         cmd: ['function.sh.onEvent'],
@@ -75,13 +75,16 @@ export class BashExecFunction extends Construct {
       sourcePath: path.join(__dirname, '../docker.d'),
     });
 
-    new CustomResource(this, 'RunLambdaBash', {
+    const resource = new CustomResource(this, 'RunLambdaBash', {
+      resourceType: 'Custom::RunLambdaBash',
       serviceToken: myProvider.serviceToken,
       properties: {
         assetHash: ops.runOnUpdate ? staging.assetHash : undefined,
       },
     });
     this.handler.grantInvoke(onEvent.grantPrincipal);
+
+    return resource;
   }
 
 }
