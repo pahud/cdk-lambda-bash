@@ -1,5 +1,4 @@
-const { AwsCdkConstructLibrary } = require('projen');
-const { Automation } = require('projen-automate-it');
+const { AwsCdkConstructLibrary, DependenciesUpgradeMechanism } = require('projen');
 
 const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
@@ -17,13 +16,16 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-logs',
     '@aws-cdk/custom-resources',
   ],
-  dependabot: false,
-  deps: [
-    'projen-automate-it',
-  ],
-  bundledDeps: [
-    'projen-automate-it',
-  ],
+  depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+    workflowOptions: {
+      labels: ['auto-approve', 'auto-merge'],
+      secret: AUTOMATION_TOKEN,
+    },
+  }),
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+    allowedUsernames: ['pahud'],
+  },
   cdkTestDependencies: [
     '@aws-cdk/aws-s3',
   ],
@@ -37,12 +39,10 @@ const project = new AwsCdkConstructLibrary({
   },
 });
 
-
-const automation = new Automation(project, {
-  automationToken: AUTOMATION_TOKEN,
+project.package.addField('resolutions', {
+  'trim-newlines': '3.0.1',
 });
 
-automation.projenYarnUpgrade();
 
 const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', 'dependabot.yml'];
 project.npmignore.exclude(...common_exclude);
