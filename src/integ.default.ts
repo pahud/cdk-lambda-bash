@@ -18,6 +18,7 @@ export class IntegTesting {
     const fn = new BashExecFunction(stack, 'Demo', {
       script: path.join(__dirname, '../demo.sh'),
       dockerfile: path.join(__dirname, '../Dockerfile'),
+      timeout: cdk.Duration.minutes(2),
       environment: {
         FOO: 'BAR',
       },

@@ -77,7 +77,7 @@ Object {
             "Arn",
           ],
         },
-        "Timeout": 60,
+        "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
     },

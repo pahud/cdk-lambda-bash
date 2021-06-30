@@ -17,9 +17,16 @@ export interface BashExecFunctionProps {
   readonly dockerfile?: string;
 
   /**
-   * Lambda environment variables
+   * Lambda environment variables.
    */
   readonly environment?: { [key: string]: string };
+
+  /**
+   * The function execution time (in seconds) after which Lambda terminates the function.
+   * Because the execution time affects cost, set this value based on the function's expected execution time.
+   * @default - Duration.seconds(60)
+   * */
+  readonly timeout?: Duration;
 }
 
 export interface RunOps {
@@ -51,7 +58,7 @@ export class BashExecFunction extends Construct {
       code: lambda.DockerImageCode.fromImageAsset(dockerDirPath, {
         file: props?.dockerfile && fs.existsSync(props?.dockerfile) ? 'Dockerfile.custom': undefined,
       }),
-      timeout: Duration.seconds(60),
+      timeout: props.timeout ?? Duration.seconds(60),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: props.environment,
     });
