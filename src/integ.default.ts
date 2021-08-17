@@ -66,7 +66,7 @@ export class IntegTestingCustomRole {
   }
 }
 
-// new IntegTesting();
-new IntegTestingCustomRole();
+new IntegTesting();
+// new IntegTestingCustomRole();
 
 
