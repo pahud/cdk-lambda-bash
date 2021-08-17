@@ -1,6 +1,7 @@
 import '@aws-cdk/assert/jest';
 import * as path from 'path';
 import { ResourcePart, SynthUtils } from '@aws-cdk/assert';
+import * as iam from '@aws-cdk/aws-iam';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
 import { BashExecFunction } from '../src';
@@ -37,4 +38,25 @@ test('run should return custom resource', () => {
   expect(stack).toHaveResource('Custom::RunLambdaBash', {
     DependsOn: ['Bucket83908E77'],
   }, ResourcePart.CompleteDefinition);
+});
+
+test('custom lambda execution role', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'test-stack');
+  const customRole = new iam.Role(stack, 'Role', {
+    roleName: 'customRole',
+    assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+  });
+  new BashExecFunction(stack, 'Demo', {
+    script: path.join(__dirname, '../demo.sh'),
+    role: customRole,
+  });
+  expect(stack).toHaveResource('AWS::Lambda::Function', {
+    Role: {
+      'Fn::GetAtt': [
+        'Role1ABCC5F0',
+        'Arn',
+      ],
+    },
+  });
 });

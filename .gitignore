@@ -6,10 +6,12 @@
 *.seed
 *.tgz
 *.tsbuildinfo
+.bin
 .cache
 .eslintcache
 .jsii
 .nyc_output
+.tmp
 .yarn-integrity
 /.changelog.tmp.md
 /coverage

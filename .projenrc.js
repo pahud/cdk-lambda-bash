@@ -12,11 +12,13 @@ const project = new AwsCdkConstructLibrary({
   name: 'cdk-lambda-bash',
   cdkDependencies: [
     '@aws-cdk/core',
+    '@aws-cdk/aws-iam',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-logs',
     '@aws-cdk/custom-resources',
   ],
   depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+    ignoreProjen: false,
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],
       secret: AUTOMATION_TOKEN,
@@ -44,7 +46,7 @@ project.package.addField('resolutions', {
 });
 
 
-const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', 'dependabot.yml'];
+const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', 'dependabot.yml', '.bin', '.tmp'];
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
 

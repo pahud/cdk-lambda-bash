@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as iam from '@aws-cdk/aws-iam';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as logs from '@aws-cdk/aws-logs';
 import { CfnOutput, Construct, CustomResource, Duration, AssetStaging } from '@aws-cdk/core';
@@ -27,6 +28,13 @@ export interface BashExecFunctionProps {
    * @default - Duration.seconds(60)
    * */
   readonly timeout?: Duration;
+
+  /**
+   * Custom lambda execution role.
+   *
+   * @default - auto generated role.
+   */
+  readonly role?: iam.IRole;
 }
 
 export interface RunOps {
@@ -61,6 +69,7 @@ export class BashExecFunction extends Construct {
       timeout: props.timeout ?? Duration.seconds(60),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: props.environment,
+      role: props.role,
     });
     new CfnOutput(this, 'LogGroup', { value: this.handler.logGroup.logGroupName });
   }
