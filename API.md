@@ -38,6 +38,7 @@ new BashExecFunction(scope: Construct, id: string, props: BashExecFunctionProps)
   * **script** (<code>string</code>)  The path of the shell script to be executed. 
   * **dockerfile** (<code>string</code>)  The path of your custom dockerfile. __*Optional*__
   * **environment** (<code>Map<string, string></code>)  Lambda environment variables. __*Optional*__
+  * **role** (<code>[IRole](#aws-cdk-aws-iam-irole)</code>)  Custom lambda execution role. __*Default*__: auto generated role.
   * **timeout** (<code>[Duration](#aws-cdk-core-duration)</code>)  The function execution time (in seconds) after which Lambda terminates the function. __*Default*__: Duration.seconds(60)
 
 
@@ -80,6 +81,7 @@ Name | Type | Description
 **script** | <code>string</code> | The path of the shell script to be executed.
 **dockerfile**? | <code>string</code> | The path of your custom dockerfile.<br/>__*Optional*__
 **environment**? | <code>Map<string, string></code> | Lambda environment variables.<br/>__*Optional*__
+**role**? | <code>[IRole](#aws-cdk-aws-iam-irole)</code> | Custom lambda execution role.<br/>__*Default*__: auto generated role.
 **timeout**? | <code>[Duration](#aws-cdk-core-duration)</code> | The function execution time (in seconds) after which Lambda terminates the function.<br/>__*Default*__: Duration.seconds(60)
 
 

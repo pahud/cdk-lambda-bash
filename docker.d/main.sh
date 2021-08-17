@@ -1,13 +1,8 @@
 #!/bin/bash
 
-function whoami() {
-  aws sts get-caller-identity
-}
-
 # implement your business logic below
 function onCreate() {
-  echo "running whoami"
-  whoami
+  echo "running kubectl apply -f ..."
 }
 
 function onUpdate() { 
@@ -15,7 +10,7 @@ function onUpdate() {
 }
 
 function onDelete() { 
-  echo "do nothing on update"
+  echo "running kubectl delete -f ..."
 }
 
 function getRequestType() {
